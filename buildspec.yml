@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+    commands:
+      # Optional: Install AWS CLI if not present
+      - pip install awscli --upgrade --user || true
+
+  pre_build:
+    commands:
+      - echo "Initializing environment and fetching CodeArtifact token"
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain  project-nextwork --domain-owner 593793041923 --region eu-north-1 --query authorizationToken --output text)
+      - echo "Retrieved token for CodeArtifact"
+
+  build:
+    commands:
+      - echo "Build started on $(date)"
+      - mvn -B -s settings.xml clean compile
+
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - mvn -B -s settings.xml package
+      - echo "Packaging completed"
+
+artifacts:
+  files:
+    - 'target/nextwork-web-project.war'
+  discard-paths: no
