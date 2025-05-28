@@ -10,7 +10,6 @@ phases:
 
   pre_build:
     commands:
-      - echo "Initializing environment and fetching CodeArtifact token"
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain devops-cicd --domain-owner 593793041923 --region eu-north-1 --query authorizationToken --output text)
       - echo "Token: ${CODEARTIFACT_AUTH_TOKEN}"
       - echo "Retrieved token for CodeArtifact"
