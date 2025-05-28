@@ -12,13 +12,11 @@ phases:
     commands:
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain devops-cicd --domain-owner 593793041923 --region eu-north-1 --query authorizationToken --output text)
       
-
   build:
     commands:
       - echo "Build started on $(date)"
       - mvn -B -s settings.xml clean compile
-      -mvn test
-
+      - mvn test
 
   post_build:
     commands:
