@@ -17,10 +17,7 @@ phases:
     commands:
       - echo "Build started on $(date)"
       - mvn -B -s settings.xml clean compile
-
-  test:
-    commands:
-      - mvn -B -s settings.xml test
+      -mvn test
 
 
   post_build:
